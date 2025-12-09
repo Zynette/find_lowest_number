@@ -1,0 +1,30 @@
+name: Run Python Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Test 1 - ten numbers
+      run: |
+        python3 find_lowest_number.py test_data/test1_input.txt test_data/test1_output.txt
+        diff test_data/test1_output.txt test_data/test1_expected.txt
+
+    - name: Test 2 - single number
+      run: |
+        python3 find_lowest_number.py test_data/test2_input.txt test_data/test2_output.txt
+        diff test_data/test2_output.txt test_data/test2_expected.txt
